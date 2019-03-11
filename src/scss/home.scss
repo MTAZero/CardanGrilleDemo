@@ -4,11 +4,10 @@
     text-align: center;
 
     .textInput{
-        margin-top: 10px;
+        margin-top: 5px;
 
         input{
             width: 200px;
-            margin-left: 10px;
         }
     }
 
@@ -22,6 +21,10 @@
             margin-right: auto;
             width: 300px;
             text-align: center;
+
+            .row{
+                min-height: 30px;
+            }
         }
 
         button{
@@ -30,7 +33,7 @@
     }
 
     .displayDecrypt{
-        margin-top: 10px;
+        margin-top: 5px;
         width: 80%;
         margin-left: auto;
         margin-right: auto;
@@ -38,11 +41,19 @@
         .ContainMatrix{
             margin-left: 10px;
             margin-right: 10px;
+
+            .decryptText{
+                color: blue;
+                font-size: 17px;
+                margin-top: 5px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
         }
     }
 
     .displayEncrypt{
-        margin-top: 10px;
+        margin-top: 5px;
         width: 80%;
         margin-left: auto;
         margin-right: auto;
@@ -54,7 +65,7 @@
     }
 
     .Result{
-        margin-top: 10px;
+        margin-top: 5px;
     }
 }
 

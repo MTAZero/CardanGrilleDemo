@@ -26,8 +26,8 @@ class MatrixDisplay extends Component {
     }
 
     drawTable = () => {
-        const {h, w, data} =  this.state;
-        const textTable = this.state.textTable;
+        const {h, w, data} =  this.props.matrix;
+        const textTable = this.props.textTable;
         let ans = [];
 
         for(var i = 0; i < h; i++){
@@ -35,8 +35,9 @@ class MatrixDisplay extends Component {
 
             for(var j = 0; j < w; j++){
                 let stylez = {
-                    border: "1px solid black", 
-                    textAlign: "center"
+                    border: "1px solid gray", 
+                    textAlign: "center",
+                    padding: "2px"
                 }
 
                 if (data[i][j] == 1) 
@@ -47,11 +48,11 @@ class MatrixDisplay extends Component {
                         }
                     };
 
-                if (data[i][j] == 0 && textTable[i][j] != 0){
+                if (data[i][j] == 0 && textTable[i][j] != -1){
                     stylez = {
                         ...stylez,
                         ...{
-                            backgroundColor: 'lightgray'
+                            backgroundColor: '#f2f2f2'
                         }
                     }
                 }
@@ -62,10 +63,25 @@ class MatrixDisplay extends Component {
                             (data[i][j] == 1)
                             ?
                             <div style={{height: 25, width: 25, borderRadius: "50%", border: "1px solid black", marginLeft: 'auto', marginRight: 'auto'}}>
-                                {textTable[i][j]}
+                                {
+                                    (textTable[i][j] != -1)
+                                    ?
+                                    textTable[i][j]
+                                    :
+                                    " "
+                                }
                             </div>
                             :
-                            textTable[i][j]
+                            <div style={{height: 25, width: 25, marginLeft: 'auto', marginRight: 'auto'}}>
+                                {
+                                    (textTable[i][j] != -1)
+                                    ?
+                                    textTable[i][j]
+                                    :
+                                    " "
+                                }
+                            </div>
+                            
                         }
                         
                     </Col>

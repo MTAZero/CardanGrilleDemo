@@ -5,7 +5,7 @@ class Result extends Component{
         return (
             <div className="Result">
                 <span>
-                    <h3>Text Result: </h3> {this.props.text}
+                    <h3>{this.props.title}: </h3> {this.props.text}
                 </span>
             </div>
         )

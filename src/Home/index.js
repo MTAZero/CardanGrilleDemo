@@ -20,13 +20,20 @@ const matrix =
         ]
     };
 
+const zeroMatrix = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+]
+
 class HomePage extends Component {
 
     constructor(props){
         super(props);
 
         this.state = {
-            text: "",
+            text: "BuiXuanThuyATK50",
             result: "",
             matrix: {
                 w: 4,
@@ -39,19 +46,58 @@ class HomePage extends Component {
                 ]
             },
             matrixs: [matrix, matrix, matrix, matrix],
-            
+            textTables: [
+                [
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1]
+                ],
+                [
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1]
+                ],
+                [
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1]
+                ],
+                [
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1],
+                    [-1, -1, -1, -1]
+                ]
+            ],
+            decryptTextTable:[
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1]
+            ],
+            decryptTexts:[
+                "",
+                "",
+                "",
+                ""
+            ]
         };
 
         
     }
 
-    componentDidMount = () => {
+    componentDidMount = async() => {
         const matrix = this.state.matrix;
         let matrix1 = this._rotateMatrix(matrix);
         let matrix2 = this._rotateMatrix(matrix1);
         let matrix3 = this._rotateMatrix(matrix2);
         
-        this.setState({matrixs: [matrix, matrix1, matrix2, matrix3]});
+        await this.setState({matrixs: [matrix, matrix1, matrix2, matrix3]});
+
+        this._encrypt();
     }
 
     _rotateMatrix = (matrix) => {
@@ -114,17 +160,133 @@ class HomePage extends Component {
         return ans;
     }
 
-    _handleGenMatrixAction = () => {
+    _handleGenMatrixAction = async() => {
         let matrix = this._genMaxtrix();
         let matrix1 = this._rotateMatrix(matrix);
         let matrix2 = this._rotateMatrix(matrix1);
         let matrix3 = this._rotateMatrix(matrix2);
         
-        this.setState({matrix: matrix, matrixs: [matrix, matrix1, matrix2, matrix3]});
+        await this.setState({matrix: matrix, matrixs: [matrix, matrix1, matrix2, matrix3]});
+        this._encrypt();
     }
 
-    _handleChangeText = (text) => {
-        this.setState({text: text});
+    _handleChangeText = async (text) => {
+        await this.setState({text: text});
+
+        // encrypt
+        this._encrypt();
+
+    }
+
+    _encrypt = async() => {
+        const text = this.state.text;
+        var textTables = [
+            [
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1]
+            ],
+            [
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1]
+            ],
+            [
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1]
+            ],
+            [
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1],
+                [-1, -1, -1, -1]
+            ]
+        ];
+
+        var tempTable = [
+            [-1, -1, -1, -1],
+            [-1, -1, -1, -1],
+            [-1, -1, -1, -1],
+            [-1, -1, -1, -1]
+        ];
+
+        let idText = 0;
+        for(let ix = 0; ix < 4; ix++){
+            let _matrix = this.state.matrixs[ix].data;
+
+            if (idText >= text.length) break;
+
+            for(let i = 0; i < 4; i++){
+                for(let j = 0; j < 4; j++)
+                    if (_matrix[i][j] == 1){
+                        
+                        tempTable[i][j] = text[idText];
+                        idText++;
+                        if (idText >= text.length) break;
+                    }
+                
+                if (idText >= text.length) break;
+            }
+
+            for(let i = 0; i < 4; i++)
+                for(let j = 0; j < 4; j++)
+                    textTables[ix][i][j] = tempTable[i][j];
+          
+        }
+
+        let result = "";
+        for(let i = 0; i<4; i++)
+            for(let j = 0; j<4; j++)
+                if (tempTable[i][j] != -1)
+                    result = result + tempTable[i][j];
+                else 
+                    result = result + '@';
+
+        await this.setState({textTables: textTables, result: result});
+
+        this._decrypt();
+    }
+
+    _decrypt = () => {
+        const text = this.state.result;
+
+        var tempTable = [
+            [-1, -1, -1, -1],
+            [-1, -1, -1, -1],
+            [-1, -1, -1, -1],
+            [-1, -1, -1, -1]
+        ];
+
+        let idText = 0;
+        for(let i = 0; i < 4; i++)
+            for(let j = 0; j < 4; j++){
+                tempTable[i][j] = text[idText];
+                idText++;
+                if (idText >= text.length) break;
+            }
+
+        // get text
+        let ans = [];
+        const matrixs = this.state.matrixs;
+
+        for(let ix = 0; ix < 4; ix++){
+            let text = "{";
+
+            for(let i = 0; i < 4; i++)
+                for(let j = 0; j < 4; j++)
+                    if (matrixs[ix].data[i][j] == 1)
+                        text = text + tempTable[i][j];
+
+            text = text + "}";
+
+            ans = ans.concat(text)
+        }
+
+        this.setState({decryptTextTable: tempTable, decryptTexts: ans});
     }
 
     render(){
@@ -133,15 +295,15 @@ class HomePage extends Component {
             <div className="HomePage">
                 <GenMatrix matrix={this.state.matrix} genMatrixAction = {() => this._handleGenMatrixAction()}/>
                 <hr />
-                <TextInput onChange={(text) => this._handleChangeText(text)} />
+                <TextInput onChange={(text) => this._handleChangeText(text)} text={this.state.text}/>
                 <hr />
-                <DisplayEncrypt text={this.state.text} matrixs={this.state.matrixs} />
+                <DisplayEncrypt matrixs={this.state.matrixs} textTables={this.state.textTables} />
                 <hr />
-                <Result text={this.state.text}/>
+                <Result text={this.state.result} title="Text Encrypt"/>
                 <hr />
-                <DisplayDecrypt text={this.state.text} matrixs={this.state.matrixs} />
+                <DisplayDecrypt matrixs={this.state.matrixs} decryptTextTables={this.state.decryptTextTable} decryptTexts={this.state.decryptTexts}/>
                 <hr />
-                <Result />
+                <Result text={this.state.text} title="Text Decrypt"/>
                 <hr />
             </div>
         )
