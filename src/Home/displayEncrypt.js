@@ -4,6 +4,7 @@ import {Row, Col} from 'reactstrap';
 
 //component
 import Matrix from './matrix';
+import DisplayMatrix from './maxtrixDisplay';
 
 class DisplayEncrypt extends Component {
     render(){
@@ -14,12 +15,12 @@ class DisplayEncrypt extends Component {
                 <Row>
                     <Col xs="3" sm="3" md="3">
                         <div className="ContainMatrix">
-                            <Matrix matrix={matrixs[0]}/>
+                            <DisplayMatrix matrix={matrixs[0]}/>
                         </div>
                     </Col>
                     <Col xs="3" sm="3" md="3">
                         <div className="ContainMatrix">
-                            <Matrix matrix={matrixs[1]}/>
+                            <DisplayMatrix matrix={matrixs[1]}/>
                         </div>
                     </Col>
                     <Col xs="3" sm="3" md="3">
