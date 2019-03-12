@@ -26,9 +26,14 @@ class Matrix extends Component {
             let row = [];
 
             for(var j = 0; j < w; j++)
-                row.push(<Col md="3" sm="3" xs="3" style={{border: "1px solid gray", textAlign: "center"}}>{data[i][j]}</Col>)
+                row.push(<Col style={{border: "1px solid gray", textAlign: "center", height: "30px", width: "30px"}}>{data[i][j]}</Col>)
             
-            ans.push(<Row>{row}</Row>);
+            ans.push(
+            <Row style={{textAlign: "center", marginLeft: "auto", marginRight: "auto"}}>
+                
+                    {row}
+                
+            </Row>);
         }
 
         return ans;

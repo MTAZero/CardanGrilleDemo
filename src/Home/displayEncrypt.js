@@ -9,6 +9,7 @@ import DisplayMatrix from './maxtrixDisplay';
 class DisplayEncrypt extends Component {
     render(){
         const {matrixs, text, textTables} = this.props;
+
         return (
             <div className="displayDecrypt">
                 <h3>Encrypt</h3>

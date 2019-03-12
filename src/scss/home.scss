@@ -41,6 +41,13 @@
         .ContainMatrix{
             margin-left: 10px;
             margin-right: 10px;
+            text-align: center;
+
+            .Matrix{
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
 
             .decryptText{
                 color: blue;
@@ -57,7 +64,14 @@
         margin-left: auto;
         margin-right: auto;
 
+        .Matrix{
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .ContainMatrix{
+            text-align: center;
+
             margin-left: 10px;
             margin-right: 10px;
         }

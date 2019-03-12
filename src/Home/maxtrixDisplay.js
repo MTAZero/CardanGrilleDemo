@@ -4,27 +4,6 @@ import {Row, Col, Container} from 'reactstrap';
 
 class MatrixDisplay extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            h: 4,
-            w: 4,
-            data: [
-                [0, 1, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 1, 0],
-                [1, 1, 0, 0]
-            ],
-            textTable: 
-            [
-                [0, 'T', 0, 0],
-                ['U', 'Z', 0, 'K'],
-                [0, 'M', 'H', 0],
-                ['U', 'Y', 0, 0]
-            ]
-        }
-    }
-
     drawTable = () => {
         const {h, w, data} =  this.props.matrix;
         const textTable = this.props.textTable;
@@ -37,7 +16,9 @@ class MatrixDisplay extends Component {
                 let stylez = {
                     border: "1px solid gray", 
                     textAlign: "center",
-                    padding: "2px"
+                    padding: "2px",
+                    height: 35,
+                    width: 35,
                 }
 
                 if (data[i][j] == 1) 
@@ -58,7 +39,7 @@ class MatrixDisplay extends Component {
                 }
 
                 row.push(
-                    <Col md="3" sm="3" xs="3" style={stylez}>
+                    <Col style={stylez}>
                         {
                             (data[i][j] == 1)
                             ?
@@ -88,7 +69,9 @@ class MatrixDisplay extends Component {
                 )
             }
             
-            ans.push(<Row>{row}</Row>);
+            ans.push(
+                <Row style={{marginLeft: "auto",marginRight: "auto"}}>{row}</Row>
+                );
         }
 
         return ans;
